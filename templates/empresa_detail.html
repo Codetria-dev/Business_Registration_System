@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ business.name }} - Detalhes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Detalhes da Empresa</h1>
+        </header>
+
+        <nav class="breadcrumb">
+            <a href="{{ url_for('index') }}">Início</a> / 
+            <a href="{{ url_for('empresas') }}">Empresas</a> / 
+            {{ business.name }}
+        </nav>
+
+        <section class="detail-section">
+            <div class="business-detail-card" 
+                 data-business-id="{{ business.id }}"
+                 data-business-name="{{ business.name|e }}"
+                 data-business-email="{{ business.email|e }}"
+                 data-business-phone="{{ business.phone|e }}"
+                 data-business-observations="{{ business.observations|e if business.observations else '' }}">
+                <div class="detail-header">
+                    <h2>{{ business.name }}</h2>
+                </div>
+                <div class="detail-content">
+                    <div class="detail-item">
+                        <label>ID:</label>
+                        <span>{{ business.id }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <label>Nome:</label>
+                        <span>{{ business.name }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <label>Email:</label>
+                        <span>{{ business.email }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <label>Telefone:</label>
+                        <span>{{ business.phone }}</span>
+                    </div>
+                    <div class="detail-item detail-item-full">
+                        <label>Observações:</label>
+                        <span>{{ business.observations if business.observations else 'Nenhuma observação cadastrada.' }}</span>
+                    </div>
+                </div>
+                <div class="detail-actions">
+                    <button onclick="editBusinessFromPage()" class="btn btn-edit">
+                        Editar
+                    </button>
+                    <button onclick="openDeleteModal({{ business.id }}, '{{ business.name|e }}')" class="btn btn-delete">
+                        Excluir
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <div class="back-links">
+            <a href="{{ url_for('cadastrar') }}" class="btn btn-secondary">Voltar ao Cadastro</a>
+            <a href="{{ url_for('empresas') }}" class="btn btn-secondary">Voltar para Lista</a>
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">Voltar ao Início</a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>Sistema de Cadastro de Empresas</p>
+            <p>Feito por <a href="#" class="footer-brand">Codetria</a></p>
+        </div>
+    </footer>
+
+    <!-- Modal de Edição -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <h3>Editar Empresa</h3>
+            <form id="edit-form">
+                <input type="hidden" id="edit-business-id" value="">
+                
+                <div class="form-group">
+                    <label for="edit-name">Nome *</label>
+                    <input type="text" id="edit-name" name="name" required>
+                    <span class="error-message" id="edit-name-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="edit-email">Email *</label>
+                    <input type="email" id="edit-email" name="email" required>
+                    <span class="error-message" id="edit-email-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="edit-phone">Telefone *</label>
+                    <input type="text" id="edit-phone" name="phone" required>
+                    <span class="error-message" id="edit-phone-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="edit-observations">Observações</label>
+                    <textarea id="edit-observations" name="observations" rows="4" placeholder="Informações adicionais sobre a empresa..."></textarea>
+                    <span class="error-message" id="edit-observations-error"></span>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                    <button type="button" onclick="closeEditModal()" class="btn btn-cancel">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmação de Exclusão -->
+    <div id="delete-modal" class="modal">
+        <div class="modal-content">
+            <h3>Confirmar Exclusão</h3>
+            <p>Tem certeza que deseja excluir esta empresa?</p>
+            <p class="business-name" id="delete-business-name"></p>
+            <div class="modal-actions">
+                <button onclick="confirmDelete()" class="btn btn-danger">Sim, excluir</button>
+                <button onclick="closeDeleteModal()" class="btn btn-cancel">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

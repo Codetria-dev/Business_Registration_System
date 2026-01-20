@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Cadastro de Empresas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sistema de Cadastro de Empresas</h1>
+        </header>
+
+        <section class="home-section">
+            <div class="welcome-content">
+                <h2>Bem-vindo ao Sistema de Cadastro</h2>
+                <p>Gerencie o cadastro de empresas de forma simples e eficiente.</p>
+                <p>Este sistema permite cadastrar, visualizar, editar e excluir empresas cadastradas.</p>
+            </div>
+
+            <div class="action-buttons">
+                <a href="{{ url_for('cadastrar') }}" class="btn btn-primary">
+                    Cadastrar Empresa
+                </a>
+                <a href="{{ url_for('empresas') }}" class="btn btn-secondary">
+                    Ver Empresas
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>Sistema de Cadastro de Empresas</p>
+            <p>Feito por <a href="#" class="footer-brand">Codetria</a></p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Cadastro de Empresas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sistema de Cadastro de Empresas</h1>
+        </header>
+
+        <!-- Formulário de Cadastro/Edição -->
+        <section class="form-section">
+            <h2 id="form-title">Cadastrar Nova Empresa</h2>
+            <form id="business-form">
+                <input type="hidden" id="business-id" value="">
+                
+                <div class="form-group">
+                    <label for="name">Nome *</label>
+                    <input type="text" id="name" name="name" required>
+                    <span class="error-message" id="name-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required>
+                    <span class="error-message" id="email-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Telefone *</label>
+                    <input type="text" id="phone" name="phone" required>
+                    <span class="error-message" id="phone-error"></span>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" id="submit-btn">Cadastrar</button>
+                    <button type="button" id="cancel-btn" style="display: none;" onclick="cancelEdit()">Cancelar</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Busca e Ordenação -->
+        <section class="search-section">
+            <div class="search-controls">
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="Buscar por nome ou email...">
+                    <button type="button" onclick="searchBusinesses()">Buscar</button>
+                    <button type="button" onclick="clearSearch()">Limpar</button>
+                </div>
+                
+                <div class="sort-controls">
+                    <label>Ordenar por:</label>
+                    <select id="sort-select" onchange="loadBusinesses()">
+                        <option value="id">ID</option>
+                        <option value="name">Nome</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lista de Empresas -->
+        <section class="list-section">
+            <h2>Empresas Cadastradas</h2>
+            <div id="business-list" class="business-list">
+                <p class="loading">Carregando...</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal de Confirmação de Exclusão -->
+    <div id="delete-modal" class="modal">
+        <div class="modal-content">
+            <h3>Confirmar Exclusão</h3>
+            <p>Tem certeza que deseja excluir esta empresa?</p>
+            <p class="business-name" id="delete-business-name"></p>
+            <div class="modal-actions">
+                <button onclick="confirmDelete()" class="btn-danger">Sim, excluir</button>
+                <button onclick="closeDeleteModal()" class="btn-cancel">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
